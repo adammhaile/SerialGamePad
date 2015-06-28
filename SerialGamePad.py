@@ -13,6 +13,8 @@ if float(serial.VERSION) < 2.7:
 import bibliopixel.log as log
 log.setLogLevel(log.logging.DEBUG)
 
+from bibliopixel.util import d
+
 class CMDTYPE:
     INIT = 0
     GET_BTNS = 1
@@ -41,6 +43,9 @@ class SerialGamePad():
         if resp != RETURN_CODES.SUCCESS:
             SerialGamePad._printError(resp)
 
+    def __enter__(self):
+        return self
+        
     def __exit__(self, type, value, traceback):
         if self._com != None:
             log.logger.info("Closing connection to: " + self.dev)
@@ -117,7 +122,7 @@ class SerialGamePad():
         packet.append(size >> 8)
         return packet
 
-    def readState(self):
+    def getKeys(self):
         packet = SerialGamePad._generateHeader(CMDTYPE.GET_BTNS, 0)
         self._com.write(packet)
         resp = self._com.read(1)
@@ -135,7 +140,7 @@ class SerialGamePad():
         for m in self._map:
             result[m] = (bits & (1<<index) > 0)
             index += 1
-        return result
+        return d(result)
 
 if __name__ == "__main__":
     import time
@@ -145,7 +150,7 @@ if __name__ == "__main__":
         while True:
             # print count
             count += 1
-            print pad.readState()
+            print pad.getKeys()
             time.sleep(0.5)
     except KeyboardInterrupt:
         pad.__exit__(None, None, None)

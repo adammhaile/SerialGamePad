@@ -1,23 +1,8 @@
 import time
 from bibliopixel.animation import *
 from bibliopixel import *
+from bibliopixel.util import d
 from SerialGamePad import SerialGamePad
-
-class d(dict):
-    def __init__(self, *a, **k):
-        super(d, self).__init__(*a, **k)
-        self.__dict__ = self
-        for k in self.__dict__:
-        	if isinstance(self.__dict__[k], dict):
-        		self.__dict__[k] = d(self.__dict__[k])
-        	elif isinstance(self.__dict__[k], list):
-        		for i in range(len(self.__dict__[k])):
-        			if isinstance(self.__dict__[k][i], dict):
-        				self.__dict__[k][i] = d(self.__dict__[k][i])
-    def upgrade(self, a):
-        for k,v in a.items():
-            if not k in self:
-                self[k] = v
 
 #animation class
 class GamePadTest(BaseMatrixAnim):
@@ -26,7 +11,7 @@ class GamePadTest(BaseMatrixAnim):
         self._pad = SerialGamePad()
 
     def step(self, amt=1):
-        b = d(self._pad.readState())
+        b = d(self._pad.getKeys())
         self._led.drawText("U" if b.UP else " ", x=0)
         self._led.drawText("D" if b.DOWN else " ", x=6)
         self._led.drawText("L" if b.LEFT else " ", x=12)
@@ -43,12 +28,12 @@ import bibliopixel.log as log
 log.setLogLevel(log.logging.DEBUG)
 
 from bibliopixel.drivers.visualizer import DriverVisualizer
-driver = DriverVisualizer(num=0, width=64, height=8, pixelSize=10, port=1618, stayTop=True)
-led = LEDMatrix(driver, threadedUpdate=True)
+driver = DriverVisualizer(num=0, width=64, height=8, pixelSize=20, port=1618, stayTop=True)
+led = LEDMatrix(driver, threadedUpdate=False)
 anim = GamePadTest(led)
 
 try:
-    anim.run(fps=10)
+    anim.run()#fps=60)
 except KeyboardInterrupt:
     led.all_off()
     led.update()
