@@ -1,0 +1,101 @@
+Cmp-Mod V01 Created by Cvpcb (after 2015-may-01 BZR unknown)-product   date = 6/15/2015 7:00:05 PM
+
+BeginCmp
+TimeStamp = /557F5DBE;
+Reference = C1;
+ValeurCmp = CP1;
+IdModule  = w_capacitors:CP_6.3x11mm;
+EndCmp
+
+BeginCmp
+TimeStamp = /557F0FDB;
+Reference = H1;
+ValeurCmp = CONN_01X12;
+IdModule  = PCB:1x12_offset;
+EndCmp
+
+BeginCmp
+TimeStamp = /557F1053;
+Reference = H2;
+ValeurCmp = CONN_01X12;
+IdModule  = PCB:1x12_offset;
+EndCmp
+
+BeginCmp
+TimeStamp = /557F18EE;
+Reference = JOY1;
+ValeurCmp = CONN_01X05;
+IdModule  = PCB:1x5_offset;
+EndCmp
+
+BeginCmp
+TimeStamp = /557F35A8;
+Reference = L1;
+ValeurCmp = CONN_01X03;
+IdModule  = PCB:1x3_offset;
+EndCmp
+
+BeginCmp
+TimeStamp = /557F1B77;
+Reference = L2;
+ValeurCmp = CONN_01X04;
+IdModule  = PCB:1x4_offset;
+EndCmp
+
+BeginCmp
+TimeStamp = /557F1428;
+Reference = P0;
+ValeurCmp = CONN_01X02;
+IdModule  = PCB:Arcade_1x2;
+EndCmp
+
+BeginCmp
+TimeStamp = /557F16BF;
+Reference = P1;
+ValeurCmp = CONN_01X02;
+IdModule  = PCB:Arcade_1x2;
+EndCmp
+
+BeginCmp
+TimeStamp = /557F16F6;
+Reference = P2;
+ValeurCmp = CONN_01X02;
+IdModule  = PCB:Arcade_1x2;
+EndCmp
+
+BeginCmp
+TimeStamp = /557F1730;
+Reference = P3;
+ValeurCmp = CONN_01X02;
+IdModule  = PCB:Arcade_1x2;
+EndCmp
+
+BeginCmp
+TimeStamp = /557F189F;
+Reference = P4;
+ValeurCmp = CONN_01X02;
+IdModule  = PCB:Arcade_1x2;
+EndCmp
+
+BeginCmp
+TimeStamp = /557F18D9;
+Reference = P5;
+ValeurCmp = CONN_01X02;
+IdModule  = PCB:Arcade_1x2;
+EndCmp
+
+BeginCmp
+TimeStamp = /557F29BF;
+Reference = R1;
+ValeurCmp = 330;
+IdModule  = w_pth_resistors:RC03;
+EndCmp
+
+BeginCmp
+TimeStamp = /557F2A6B;
+Reference = R2;
+ValeurCmp = 330;
+IdModule  = w_pth_resistors:RC03;
+EndCmp
+
+EndListe
