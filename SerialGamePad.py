@@ -33,7 +33,7 @@ class SerialPadError(Exception):
 
 class SerialGamePad():
     foundDevices = []
-    def __init__(self, btn_map = ["A", "B", "X", "Y", "RED", "EMPTY", "UP", "DOWN", "RIGHT", "LEFT"], dev="", hardwareID = "1B4F:9206"):
+    def __init__(self, btn_map = ["Y", "B", "A", "X", "RED", "EMPTY", "UP", "DOWN", "RIGHT", "LEFT"], dev="", hardwareID = "1B4F:9206"):
         self._map = btn_map
         self._hardwareID = hardwareID
         self._com = None
@@ -45,7 +45,7 @@ class SerialGamePad():
 
     def __enter__(self):
         return self
-        
+
     def __exit__(self, type, value, traceback):
         if self._com != None:
             log.logger.info("Closing connection to: " + self.dev)
@@ -142,9 +142,47 @@ class SerialGamePad():
             index += 1
         return d(result)
 
+    def setLights(self, data):
+        temp = [(0,0,0)]*len(data.keys())
+        for key in data:
+            i = self._map.index(key)
+            if i >= 0:
+                temp[i] = (data[key])
+        leds = []
+        for l in temp:
+            leds.extend(l)
+
+        packet = SerialGamePad._generateHeader(CMDTYPE.SET_LEDS, len(leds))
+        print leds
+        packet.extend(leds)
+        self._com.write(packet)
+        resp = self._com.read(1)
+        if len(resp) == 0:
+             SerialGamePad._comError()
+        elif ord(resp) != RETURN_CODES.SUCCESS:
+            SerialGamePad._printError(ord(resp))
+
+    def setLightsOff(self, count):
+        data = {}
+        num = 0
+        for b in self._map:
+            data[b] = (0,0,0)
+            num += 1
+            if num >= count:
+                break
+        self.setLights(data)
+
 if __name__ == "__main__":
     import time
     pad = SerialGamePad(dev="", hardwareID="1B4F:9206")
+    data = {
+        "A": (255,0,0),
+        "B": (0,255,0),
+        "X": (0,0,255),
+        "Y": (128,0,64),
+        "RED":(255,0,0)
+    }
+    pad.setLights(data)
     try:
         count = 0
         while True:
@@ -153,4 +191,5 @@ if __name__ == "__main__":
             print pad.getKeys()
             time.sleep(0.5)
     except KeyboardInterrupt:
+        pad.setLightsOff(5)
         pad.__exit__(None, None, None)
